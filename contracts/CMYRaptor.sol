@@ -54,8 +54,12 @@ contract CMYRaptor is ERC721 {
         string memory _tokenURI
     ) public payable {
         require(msg.value >= 10**16, "must be .01 eth");
-        CMYK memory _cmyk = CMYK(_c, _m, _y, _k);
-        require(!checkDupe(_c, _m, _y, _k), "no dupes");
+        require(_c <= 100 && _c >= 0, "invalid color value c");
+        require(_m <= 100 && _m >= 0, "invalid color value m");
+        require(_y <= 100 && _y >= 0, "invalid color value y");
+        require(_k <= 100 && _k >= 0, "invalid color value k");
+        require(!checkDupe(_c, _m, _y, _k), "no dupes");     
+           CMYK memory _cmyk = CMYK(_c, _m, _y, _k);
         _tokenIds.increment();
         uint256 newTokenId = _tokenIds.current();
         _mint(_recipient, newTokenId);
